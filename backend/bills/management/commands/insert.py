@@ -75,7 +75,7 @@ class Command(BaseCommand):
             "latest_major_action"
         ], batch_size=500)
 
-        Bills.objects.bulk_create(insert_bills)
+        Bills.objects.bulk_create(insert_bills, batch_size=500)
 
         self.stdout.write(self.style.SUCCESS("Bill information has been inserted into database.\n"))
         self.stdout.write(self.style.SUCCESS(f"Updated: {len(update_bills)}"))
