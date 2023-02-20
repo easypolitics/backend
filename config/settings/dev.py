@@ -8,6 +8,8 @@ CACHES = {
     }
 }
 
+DATA_UPLOAD_MAX_NUMBER_FIELDS = None
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
