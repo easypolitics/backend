@@ -74,7 +74,8 @@ class Command(BaseCommand):
             "vetoed", "filtered_date", "filtered_type", "cosponsors", "cosponsors_by_party", "committees",
             "committee_codes", "primary_subject", "summary", "summary_short", "latest_major_action_date",
             "latest_major_action"
-        ])
+        ], batch_size=500)
+
         Bills.objects.bulk_create(insert_bills)
 
         self.stdout.write(self.style.SUCCESS("Bill information has been inserted into database.\n"))
