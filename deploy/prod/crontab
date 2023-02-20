@@ -1,11 +1,11 @@
 # 2 PM UTC => 6 AM PST
 0 14 * * * python manage.py collect
 
-# 3 PM UTC => 7 AM PST
+# 2:15 PM UTC => 6:15 AM PST
 15 14 * * * python manage.py insert
 
 # 2 AM UTC => 6 PM PST
 0 02 * * * python manage.py collect
 
-# 3 AM UTC => 7 PM PST
+# 2:15 AM UTC => 6:15 PM PST
 15 02 * * * python manage.py insert
