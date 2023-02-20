@@ -1,4 +1,4 @@
 -r base.txt
 
 django-extensions==3.2.1
-Werkzeug==2.2.2
+Werkzeug==2.2.3
