@@ -57,12 +57,11 @@ class Command(BaseCommand):
                 )
 
                 filtered_date, filtered_type = self.filtered_data(obj)
-
-                obj.filtered_date = filtered_date
-                obj.filtered_type = filtered_type
+                obj.filtered_date, obj.filtered_type = filtered_date, filtered_type
 
                 if bill_id:
-                    update_bills.append(obj)
+                    if obj not in update_bills:
+                        update_bills.append(obj)
                 else:
                     if obj not in insert_bills:
                         insert_bills.append(obj)
