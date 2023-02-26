@@ -1,6 +1,6 @@
 #!/bin/sh
 
-supercronic /app/deploy/dev/crontab &
+supercronic -sentry-dsn $SENTRY_DSN_CRONJOB /app/deploy/dev/crontab &
 
 python manage.py migrate --no-input
 python manage.py collectstatic --no-input
