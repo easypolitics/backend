@@ -5,9 +5,7 @@ from .base import *
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 
-CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_SECURE = True
-CSRF_USE_SESSIONS = True
 
 DATABASES = {
     "default": {
@@ -22,6 +20,9 @@ DATABASES = {
 
 DEBUG = False
 
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_TIMEOUT = 5
+
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -31,8 +32,7 @@ SECURE_HSTS_PRELOAD = True
 SECURE_HSTS_SECONDS = 63072000
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_SSL_REDIRECT = True
-SECURE_BROWSER_XSS_FILTER = True
-SESSION_COOKIE_HTTPONLY = True
+
 SESSION_COOKIE_SECURE = True
 
 sentry_sdk.init(
@@ -43,5 +43,3 @@ sentry_sdk.init(
     traces_sample_rate=1.0,
     send_default_pii=True
 )
-
-X_FRAME_OPTIONS = "DENY"

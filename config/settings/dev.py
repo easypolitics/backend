@@ -4,11 +4,9 @@ ALLOWED_HOSTS = ["*"]
 
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
     }
 }
-
-DATA_UPLOAD_MAX_NUMBER_FIELDS = None
 
 DATABASES = {
     "default": {
@@ -21,7 +19,11 @@ DATABASES = {
     },
 }
 
+DATA_UPLOAD_MAX_NUMBER_FIELDS = None
+
 DEBUG = True
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 INSTALLED_APPS += ["django_extensions"]
 

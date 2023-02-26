@@ -3,11 +3,11 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+ADMINS = [("admin", os.getenv("SUPER_USER_EMAIL", ""))]
+
 ADMIN_SITE_HEADER = "easypolitics"
 ADMIN_SITE_INDEX_TITLE = "Site administration"
 ADMIN_SITE_TITLE = "easypolitics"
-
-ADMINS = [("admin", os.getenv("SUPER_USER_EMAIL", ""))]
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -33,6 +33,8 @@ CACHES = {
 # https://github.com/adamchainz/django-cors-headers
 CORS_URLS_REGEX = r"^/v1/.*$"
 
+CSRF_COOKIE_HTTPONLY = True
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 INSTALLED_APPS = [
@@ -49,6 +51,20 @@ INSTALLED_APPS = [
 
 LANGUAGE_CODE = "en-us"
 
+MANAGERS = ADMINS
+
+MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+]
+
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.Argon2PasswordHasher",
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
@@ -58,20 +74,6 @@ PASSWORD_HASHERS = [
 ]
 
 PROPUBLICA_API = os.getenv("PROPUBLICA_API")
-
-MANAGERS = ADMINS
-
-MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
-]
 
 REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": (
@@ -96,11 +98,13 @@ REST_FRAMEWORK = {
 
 ROOT_URLCONF = "config.urls"
 
-STATIC_URL = "static/"
+SECURE_BROWSER_XSS_FILTER = True
 
-STATIC_ROOT = "/app/static"
+SESSION_COOKIE_HTTPONLY = True
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATIC_ROOT = "/app/static"
+STATIC_URL = "static/"
 
 TEMPLATES = [
     {
@@ -118,8 +122,6 @@ TEMPLATES = [
     },
 ]
 
-SESSION_COOKIE_HTTPONLY = True
-
 TIME_ZONE = "UTC"
 
 USE_I18N = True
@@ -127,3 +129,5 @@ USE_I18N = True
 USE_TZ = True
 
 WSGI_APPLICATION = "config.wsgi.application"
+
+X_FRAME_OPTIONS = "DENY"
