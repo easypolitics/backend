@@ -26,8 +26,6 @@ class Bills(models.Model):
     senate_passage = models.CharField(max_length=255, null=True)
     enacted = models.CharField(max_length=255, null=True)
     vetoed = models.CharField(max_length=255, null=True)
-    filtered_date = models.CharField(max_length=255, null=True)
-    filtered_type = models.CharField(max_length=255, null=True)
     cosponsors = models.CharField(max_length=255)
     cosponsors_by_party = models.JSONField()
     committees = models.CharField(max_length=255)
@@ -38,6 +36,9 @@ class Bills(models.Model):
     summary_short = models.TextField()
     latest_major_action_date = models.CharField(max_length=255)
     latest_major_action = models.TextField()
+    filtered_date = models.CharField(max_length=255, null=True)
+    filtered_type = models.CharField(max_length=255, null=True)
+    congress_version = models.CharField(max_length=255, null=True)
     created_at = models.DateTimeField(auto_now=True, null=True)
 
     class Meta:

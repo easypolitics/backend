@@ -30,12 +30,16 @@ CACHES = {
     },
 }
 
+CONGRESS_VERSION = "118"
+
 # https://github.com/adamchainz/django-cors-headers
 CORS_URLS_REGEX = r"^/v1/.*$"
 
 CSRF_COOKIE_HTTPONLY = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+EXCLUDE_BILLS = ["hres", "sres"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",

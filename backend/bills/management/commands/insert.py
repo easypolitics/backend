@@ -1,15 +1,18 @@
 import datetime
 import json
 
+from django.conf import settings
 from django.core.management.base import BaseCommand
 
 from ...models import Bills
+
+CONGRESS = settings.CONGRESS_VERSION
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
         dt = datetime.datetime.now()
-        dt = dt.strftime("%Y-%d-%m")
+        dt = dt.strftime("%Y-%m-%d")
 
         update_bills = []
         insert_bills = []
@@ -53,26 +56,28 @@ class Command(BaseCommand):
                     summary=bill["summary"],
                     summary_short=bill["summary_short"],
                     latest_major_action_date=bill["latest_major_action_date"],
-                    latest_major_action=bill["latest_major_action"]
+                    latest_major_action=bill["latest_major_action"],
+                    congress_version=CONGRESS
                 )
 
                 filtered_date, filtered_type = self.filtered_data(obj)
                 obj.filtered_date, obj.filtered_type = filtered_date, filtered_type
 
                 if bill_id:
-                    if obj not in update_bills:
-                        update_bills.append(obj)
+                    update_bills.append(obj)
                 else:
-                    if obj not in insert_bills:
-                        insert_bills.append(obj)
+                    insert_bills.append(obj)
+
+        update_bills = set(update_bills)
+        insert_bills = set(insert_bills)
 
         Bills.objects.bulk_update(update_bills, [
             "bill_slug", "bill_type", "number", "bill_uri", "title", "short_title", "sponsor_title", "sponsor_id",
             "sponsor_name", "sponsor_state", "sponsor_party", "sponsor_uri", "gpo_pdf_uri", "congressdotgov_url",
             "govtrack_url", "introduced_date", "active", "last_vote", "house_passage", "senate_passage", "enacted",
-            "vetoed", "filtered_date", "filtered_type", "cosponsors", "cosponsors_by_party", "committees",
-            "committee_codes", "primary_subject", "summary", "summary_short", "latest_major_action_date",
-            "latest_major_action"
+            "vetoed", "cosponsors", "cosponsors_by_party", "committees", "committee_codes", "primary_subject",
+            "summary", "summary_short", "latest_major_action_date", "latest_major_action", "filtered_date",
+            "filtered_type", "congress_version"
         ], batch_size=500)
 
         Bills.objects.bulk_create(insert_bills, batch_size=500)

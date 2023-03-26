@@ -6,6 +6,9 @@ import requests
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
+CONGRESS = settings.CONGRESS_VERSION
+PROPUBLICA = settings.PROPUBLICA_API
+
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
@@ -14,8 +17,9 @@ class Command(BaseCommand):
         results = True
 
         while results:
-            resp = requests.get(f"https://api.propublica.org/congress/v1/117/both/bills/active.json?offset={count}",
-                                headers={"X-API-Key": settings.PROPUBLICA_API})
+            resp = requests.get(
+                f"https://api.propublica.org/congress/v1/{CONGRESS}/both/bills/active.json?offset={count}",
+                headers={"X-API-Key": PROPUBLICA})
             data = resp.json()
 
             for bill in data["results"][0]["bills"]:
@@ -29,7 +33,7 @@ class Command(BaseCommand):
         json_string = json.dumps([bill for bill in bills], indent=2)
 
         dt = datetime.datetime.now()
-        dt = dt.strftime("%Y-%d-%m")
+        dt = dt.strftime("%Y-%m-%d")
 
         if not os.path.exists("data"):
             os.makedirs("data")
