@@ -13,7 +13,7 @@ CONGRESS = settings.CONGRESS_VERSION
 
 
 class BillsView(generics.ListAPIView):
-    queryset = Bills.objects.exclude(bill_type__in=[EXCLUDE_BILLS]).filter(filtered_date__isnull=False,
+    queryset = Bills.objects.exclude(bill_type__in=EXCLUDE_BILLS).filter(filtered_date__isnull=False,
                                                                            congress_version=CONGRESS).order_by(
         "-filtered_date")
     serializer_class = BillsSerializer
