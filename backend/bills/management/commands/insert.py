@@ -7,6 +7,8 @@ from django.core.management.base import BaseCommand
 from ...models import Bills
 
 CONGRESS = settings.CONGRESS_VERSION
+HOUSE = settings.HOUSE_BILLS
+SENATE = settings.SENATE_BILLS
 
 
 class Command(BaseCommand):
@@ -88,13 +90,27 @@ class Command(BaseCommand):
 
     @staticmethod
     def filtered_data(obj):
-        if obj.vetoed is not None:
-            return obj.vetoed, "vetoed"
-        elif obj.enacted is not None:
-            return obj.enacted, "enacted"
-        elif obj.senate_passage is not None:
-            return obj.senate_passage, "senate"
-        elif obj.house_passage is not None:
-            return obj.house_passage, "house"
+        if obj.bill_type in SENATE:
+            if obj.vetoed is not None:
+                return obj.vetoed, "vetoed"
+            elif obj.enacted is not None:
+                return obj.enacted, "enacted"
+            elif obj.house_passage is not None:
+                return obj.house_passage, "house"
+            elif obj.senate_passage is not None:
+                return obj.senate_passage, "senate"
+            else:
+                return None, None
+        elif obj.bill_type in HOUSE:
+            if obj.vetoed is not None:
+                return obj.vetoed, "vetoed"
+            elif obj.enacted is not None:
+                return obj.enacted, "enacted"
+            elif obj.senate_passage is not None:
+                return obj.senate_passage, "senate"
+            elif obj.house_passage is not None:
+                return obj.house_passage, "house"
+            else:
+                return None, None
         else:
             return None, None

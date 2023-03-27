@@ -41,6 +41,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 EXCLUDE_BILLS = ["hres", "sres"]
 
+HOUSE_BILLS = ["hconres", "hjres", "hr", "hres"]
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -103,6 +105,8 @@ REST_FRAMEWORK = {
 ROOT_URLCONF = "config.urls"
 
 SECURE_BROWSER_XSS_FILTER = True
+
+SENATE_BILLS = ["s", "sconres", "sjres", "sres"]
 
 SESSION_COOKIE_HTTPONLY = True
 
