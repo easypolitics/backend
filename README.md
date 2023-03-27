@@ -2,6 +2,8 @@
 
 Source code for easypolitics.app backend.
 
+Read the case study here: https://uxfol.io/p/chrismehlhoff/0318d02a
+
 #### Development
 
 We use Docker containers for local development. To get started,
@@ -19,3 +21,8 @@ Run the following commands to pull and insert bill information into Postgres:
 1. Open terminal for `backend` Docker container.
 2. Run `python manage.py collect` to collect bill information from propublica.org API.
 3. Run `python manage.py insert` to insert bill information into Postgres.
+
+#### Credits
+
+- Product Designer - Chris Mehlhoff
+- Lead Programmer - Steven Mehlhoff
